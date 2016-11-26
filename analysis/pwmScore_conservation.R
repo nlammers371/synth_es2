@@ -36,8 +36,8 @@ es2Anno <- DNAString(es2AnnoChar)
 es2 <- DNAString(es2Char)
 
 #Calculate weight and es2 ref matrices that will remain constant throughout iteration
-wtsPMW <- pwmWeights_fun(SEQ=es2,DRIVER=TFsumm)
-es2Scores <- pwmScoreDriver_fun(SEQ=es2,DRIVER=TFsumm)
+wtsPMW <- pwmScoreDriver_fun(MAT=MAsterPWM,SEQ=es2,DRIVER=TFsumm,WEIGHT=1)
+es2Scores <- pwmScoreDriver_fun(MAT=MAsterPWM,SEQ=es2,DRIVER=TFsumm,WEIGHT=0)
 
 
 #####plot 5 known TFs as a sanity check######
