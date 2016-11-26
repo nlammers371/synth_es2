@@ -31,22 +31,51 @@ es2 <- DNAString(es2Char)
 #############################################################################
 dict0=PDict(c("AAA","TTT"))
 mm <- matchPDict(dict0, es2Anno)
-st <- as.vector(c(0,0))
-end <- as.vector(c(485,0))
-Atracts <- rbind(as.data.frame(mm[[1]]),as.data.frame(mm[[2]]))[,1:2]
-KeepRegions <- as.data.frame(rbind(as.matrix(Atracts),as.matrix(TFranges),st,end)) %>%
-               arrange(start) %>%
-               mutate(interStart = end + 1,
-                      interEnd = lead(start-1),
-                      width = interEnd - interStart +1) %>%
-               filter(interStart < interEnd) %>%
-               select(interStart,interEnd, width)
-              
 
-es2KeepChar <- gsub('F*F','-',annotate_tfbs_fun(seq=es2Char,tfbs=KeepRegions[,1:2]))
-wVec <- KeepRegions[,3]
+Atracts <- rbind(as.data.frame(mm[[1]]),as.data.frame(mm[[2]]))[,1:2]
+
+KeepRegions <- as.data.frame(rbind(as.matrix(Atracts),as.matrix(TFranges))) %>%
+               arrange(start) 
+              
+#Create table of contiguous tfbs regions
+endvec <- vector()
+startvec <- vector()
+start <- 0
+end <- 0
+e <- 1
+s <- 1
+
+for (i in 1:nrow(KeepRegions)){
+  if (KeepRegions[i,1] > end){
+    startvec[s] <- KeepRegions[i,1]
+    endvec[e] <- KeepRegions[i,2]
+    start <- KeepRegions[i,1]
+    end <- KeepRegions[i,2]
+    s <- s + 1
+    e <- e + 1}
+  
+  if (KeepRegions[i,1] <= end && KeepRegions[i,2] > (end+1)){
+    startvec[s] <- end + 1
+    endvec[e] <- KeepRegions[i,2]
+    start <- end
+    end <- KeepRegions[i,2]
+    s <- s + 1
+    e <- e + 1      
+  }
+}
+st <- as.vector(c(0,0))
+keepSeg <- as.data.frame(rbind(st,cbind(startvec,endvec)))%>%
+           mutate(newEnd = ifelse(is.na(lead(startvec)), 485,lead(startvec))-1,
+                  newStart = endvec + 1,
+                  gap = newEnd - newStart + 1) %>%
+           filter(gap > 0) %>%
+           select(newStart, newEnd, gap)
+
+es2KeepChar <- gsub('F*F','-',annotate_tfbs_fun(seq=es2Char,tfbs=keepSeg[,1:2]))
 es2KeepVec <- strsplit(es2KeepChar,'-')[[1]]
-es2KeepVec <- es2KeepVec[es2KeepVec != ""]
+es2KeepVec <- es2KeepVec[es2KeepVec!='']
+wVec <- keepSeg[,3]
+
 toSiteOut <- c()
 iter <- length(wVec) + length(es2KeepVec)
 

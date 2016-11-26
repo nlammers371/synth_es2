@@ -45,7 +45,7 @@ seqID <- mutate(boundaries,
          mutate(tail = Fbound - base + 1,
                 head = Lbound + base - 1)
 
-#I find 8 uncharacterized stretches eligible for shuffling using a 12 bp bound
+#I find 7 uncharacterized stretches eligible for shuffling using a 12 bp bound
 seqMatch <- vector()
 for (i in 1:nrow(seqID)){
     head <- substr(es2AnnoChar,(seqID[i,2]),(seqID[i,4]))
@@ -78,14 +78,25 @@ for (i in 1:nrow(I)){
 } 
 min <- min(scores)
 degeneracy <- length(scores[scores==min]) #check for multiple optimums
-ID <- which(scores==min)
-OptPath <- I[ID,]
+IDs <- which(scores==min)
+OptPaths <- I[IDs,]
+swapDist <- OptPaths
+
+for (i in 1:l){
+  swapDist[,i] <- abs(OptPath[,i] - i)  
+}
+swapSums <- rowSums(swapDist) #break tie by finding permutation most removed from original
+
+#1 and 2 are tied. Take first for now. Consider revisiting
+OptPath <- OptPaths[1,]
+
 
 #Generate scrambled ES2 using optimal insertion scheme
 insertions <- as.data.frame(matrix(nrow=8,ncol=5))
 es2shuff <- DNAString("")
 start <- 1 
 seqID <- arrange(seqID,Lbound)#This should be redundant 
+
 for (i in 1:l){
   left <- seqID[i,2] 
   orig <- es2[start:(left-1)]

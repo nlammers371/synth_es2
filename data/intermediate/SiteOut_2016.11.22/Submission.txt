@@ -1,0 +1,13 @@
+motifs to avoid:
+
+PWMs zipfile: 'SiteOutAtract.zip'
+
+Explicit motifs to be removed: none
+
+ 
+
+Results will be sent to:
+
+nlammers@berkeley.edu
+
+Confirmation number: job560
