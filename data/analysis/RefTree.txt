@@ -1,0 +1,1 @@
+(((MEMB003D,(MEMB003F,(MEMB002D,MEMB003B))),(MEMB002F,(MEMB002A,(MEMB002C,MEMB003C)))),((DroWil1,(DroMoj3,DroVir3)),(Dp4,(DroAna3,(DroEre2,(dmel,DroSim1))))));

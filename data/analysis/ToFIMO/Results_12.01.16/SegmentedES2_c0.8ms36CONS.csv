@@ -1,0 +1,12 @@
+"","start","stop","seq","left","right","L","R"
+"1",1,66,"ATATAACCCAATAATTTGAAGTAACTGgcaggagcgaggtatccttcctgGTTACccggtactgca","ATATAA","actgca",NA,"TAACAA"
+"2",67,174,"TAACAATggaacccgaaccgtaactgggacagatcgaaaagctggcctggtttctcgctgtgtgtgccgtGTTAATCCGTTTGCCATCAGCGAGATTATTAGTCAATT","TAACAA","TCAATT","actgca","gcagtt"
+"3",175,212,"gcagttgcagcgtttcgctttcgtcctcgtttcacttt","gcagtt","cacttt","TCAATT","CGAGTT"
+"4",213,268,"CGAGTTAGACTTTATTGCAGCATCTTGAACAATCGtcgcagtttGGTAACACGCTG","CGAGTT","ACGCTG","cacttt","tgccat"
+"5",269,385,"tgccatactttcatttagacggAatcgagggaccctggactataatcgcacaacgagaccgggTTGCgaagtcagggcattccgccgatctagccatcgccatcttctgcgggcgtt","tgccat","ggcgtt","ACGCTG","TGTTTG"
+"6",386,423,"TGTTTGTTTGTTTgctgGGATTAGCCaagGGCTTGACT","TGTTTG","TTGACT","ggcgtt","tggaat"
+"7",424,481,"tggaatccaatcccgatccctagcccgatcccaatcccaatcccaatcccttgtcctt","tggaat","gtcctt","TTGACT","TTCATT"
+"8",482,529,"TTCATTAGAAAGTCATAAAAACACATAATAATGATGTCGAAGGGATTA","TTCATT","GGATTA","gtcctt","ggggcg"
+"9",530,592,"ggggcgcgcaggtccaggcaacgcaatTAACGGactagcgaactgggttatttttttgcgccg","ggggcg","gcgccg","GGATTA","ACTTAG"
+"10",593,759,"ACTTAGCcctgatccgcgagcttaacccgttttgagccgggcagcaggtagttgtgggtggaccccacgatttttttggccaaacctccaagctaacttgcgcaagtggcaagtggccggtttgctggcccaaaagaggaggcactatcccggtcctggTACAGTTG","ACTTAG","CAGTTG","gcgccg","gtacgc"
+"11",760,898,"gtacgctgggaaTGATTATATCATCATAATAAATGTTttgCCCAACGAAACcgaAAACTTTTCAAATTAAGTCccggcaactgggttcccattttccattttccatgttctgcgggcagGGGCGGCCATTATCTCGCTA","gtacgc","TCGCTA","CAGTTG",NA
