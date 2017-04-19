@@ -46,6 +46,11 @@ for (file in files){
                      subtitle= paste0('Minimum Permitted Stretch: '
                     ,minStretch, ' Type:',type), x = "bp (from)", y = "bp (to)"))
   
+  c <- c + theme(axis.line = element_line(colour = "black"),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank(),
+            panel.background = element_blank()) 
   c
-  ggsave(paste0(OutPath,'/plots/',project,'_',file,'.pdf'))
+  ggsave(paste0(OutPath,'/plots/',project,'_',file,'.png'))
 }

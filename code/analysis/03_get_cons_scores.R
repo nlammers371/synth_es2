@@ -1,6 +1,7 @@
-#load sequences and obtain conservation scores
+#Scriot to align sequences and obtain conservation scores
+
 rm(list = ls())
-setwd(getwd())
+setwd('C:/Users/Nicholas/Documents/GitHub/synth_es2/code/analysis')
 source('../utilities/header.R')
 library(rphast)
 library(Biostrings)
@@ -10,13 +11,16 @@ library(ape)
 library(ggplot2)
 project <- '/ToFIMO/Results_12.01.16/'
 
-#####Read in ES2 Sequences Compiled by Ciera####
+#Read in ES2 Sequences Compiled by Ciera
 CombES2 <- readDNAStringSet(paste0(SeqPath,'forContructTarget_eve-striped-2_with_Montium_and_melanogaster.fa'))
 RefTree <- as.character(unlist(read.table(paste0(AnalyzePath,'RefTree.txt'))))
-csvFIMO <- read.csv(paste0(AnalyzePath,project,'dmel_fimo.csv'),sep=',',header=TRUE)
+
+#Read in output of TFBS segment for use as reference
 es2CASEChar <- as.character(unlist(read.csv(paste0(
                     AnalyzePath,project,'dmel_ES2Case.txt'),header=FALSE)[1]))
-#Plot RefTree for visual Check
+
+#-------------------------Format and Clean Data-----------------------------------#
+#Plot RefTree for visual Check 
 RefTreePlot <- read.tree(text = RefTree)
 plot(RefTreePlot, type = "phylogram")
 
@@ -31,11 +35,12 @@ CombES2 <- c(CombES2[17],CombES2[1:16])
 ClnNames[1] 
 CombES2[1]
 
+#---------------------Align Sequences and Estimate Tree----------------------------#
 ES2Aligned <- AlignSeqs(CombES2)
 
 msaES2 <- msa(paste(ES2Aligned),names=ClnNames)
 
-#####estimate treeeee#####
+#estimate treeeee
 neutralMod <- phyloFit(msaES2,tree=RefTree)
 
 #Let's take a look at the fitted tree
@@ -43,7 +48,7 @@ FitTree <- "(((MEMB003D:0.041213,(MEMB003F:0.0657486,(MEMB002D:0.0487667,MEMB003
 FitTreePlot <- read.tree(text = FitTree)
 plot(FitTreePlot, type = "phylogram")
 
-#estimate expected.length by taking average len of CAPS in CASE. This will give a
+#estimate expectedlength by taking average len of CAPS in CASE. This will give a
 #higher avg length than FP coordinates because many sites overlap
 splitMat <- unlist(strsplit(gsub('[a,t,g,c]','-',es2CASEChar),'-'))
 splitMat <- splitMat[splitMat != ""]
@@ -67,6 +72,9 @@ es2CASECons <- es2split
 es2CASECons[consInd] <- toupper(es2CASECons[consInd])
 es2CASECons <- paste0(es2CASECons,collapse='')
 
+#Export DNA String with conserved regions in CAPS
 write(es2CASECons, file = paste0(AnalyzePath,project,'dmel_es2CASECons_rho',RHO,'cl',consLim,'.txt'))
+#Export Cons Scores
 write.csv(cons_scores,file=paste0(AnalyzePath,project,'SegmentedES2_CONS','scores.csv'))
+#Export Alignment
 writeXStringSet(ES2Aligned,file=paste0(OutPath,'all_seq_algn.fa'))

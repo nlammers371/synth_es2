@@ -1,6 +1,6 @@
 #import and FIMO results and generate annotated ES2 seq
 rm(list = ls())
-setwd(getwd())
+setwd("C:/Users/Nicholas/Documents/GitHub/synth_es2/code/analysis")
 library(Biostrings)
 library(dplyr)
 source('../utilities/header.R')
